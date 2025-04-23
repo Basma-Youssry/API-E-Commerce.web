@@ -7,6 +7,6 @@ namespace E_Commerce.web.Moduels
         public int Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }
