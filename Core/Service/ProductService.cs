@@ -27,6 +27,7 @@ namespace Service
             var Products = await _uitOfWork.GetRepository<Product, int>().GetAllAsync();
             return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTo>>(Products);
         }
+
         public async Task<IEnumerable<TypeDTo>> GetAllTypesAsync()
         {
             var Types = await _uitOfWork.GetRepository<ProductType, int>().GetAllAsync();
@@ -40,10 +41,5 @@ namespace Service
 
             return _mapper.Map<Product, ProductDTo>(Product);
         }
-
-        Task<IEnumerable<ProductDTo>> IProductService.GetAllProductsAsync { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        Task<ProductDTo> IProductService.GetProductById { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        Task<IEnumerable<TypeDTo>> IProductService.GetAllTypesAsync { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        Task<IEnumerable<BrandDTo>> IProductService.GetAllBrandsAsync { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
