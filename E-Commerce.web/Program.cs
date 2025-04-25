@@ -4,6 +4,7 @@ using DomainLayer.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data;
+using Persistence.Repositories;
 
 namespace E_Commerce.web
 {
@@ -26,6 +27,8 @@ namespace E_Commerce.web
             });
 
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
 
 
