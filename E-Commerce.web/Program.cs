@@ -4,6 +4,9 @@ using DomainLayer.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using Persistence.Data;
+using Persistence.Repositories;
+using Service;
+using ServiceAbstraction;
 
 namespace E_Commerce.web
 {
@@ -26,6 +29,10 @@ namespace E_Commerce.web
             });
 
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(Service.AssemblyReference).Assembly);
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
             #endregion
 
 
@@ -45,8 +52,8 @@ namespace E_Commerce.web
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
+            app.UseStaticFiles();
+            //app.UseAuthorization();
 
 
             app.MapControllers();
