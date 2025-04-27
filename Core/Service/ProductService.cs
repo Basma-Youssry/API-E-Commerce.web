@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DomainLayer.Contracts;
 using DomainLayer.Models;
+using Service.Specifications;
 using ServiceAbstraction;
 using Shared.DataTransfareObjects;
 
@@ -24,22 +25,28 @@ namespace Service
 
         public async Task<IEnumerable<ProductDTo>> GetAllProductsAsync()
         {
-            var Products = await _uitOfWork.GetRepository<Product, int>().GetAllAsync();
+            var Specifications = new ProductWithBrandAndTypeSpecifications();
+            var Products = await _uitOfWork.GetRepository<Product, int>().GetAllAsync(Specifications);
             return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDTo>>(Products);
         }
 
         public async Task<IEnumerable<TypeDTo>> GetAllTypesAsync()
         {
+           
             var Types = await _uitOfWork.GetRepository<ProductType, int>().GetAllAsync();
             var TypesDTo = _mapper.Map<IEnumerable<ProductType>, IEnumerable<TypeDTo>>(Types);
             return TypesDTo;
         }
 
-        public async Task<ProductDTo> GetProductById(int Id)
+        public async Task<ProductDTo> GetProductById(int id)
         {
-            var Product = await _uitOfWork.GetRepository<Product, int>().GetByIdAsync(Id);
+            var Specifications = new ProductWithBrandAndTypeSpecifications(id);
 
-            return _mapper.Map<Product, ProductDTo>(Product);
+            var Product = await _uitOfWork.GetRepository<Product, int>().GetByIdAsync(Specifications);
+
+            var ProductDto = _mapper.Map<Product, ProductDTo>(Product);
+
+            return ProductDto;
         }
     }
 }

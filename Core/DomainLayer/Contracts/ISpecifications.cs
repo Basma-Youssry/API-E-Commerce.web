@@ -12,7 +12,7 @@ namespace DomainLayer.Contracts
     {
         //Property signature for each Dynamin in Query
 
-        public Expression<Func<TEntity, bool>> Criteria { get; }
+        public Expression<Func<TEntity, bool>>? Criteria { get; }
 
         List<Expression<Func<TEntity, object>>> IncludeExpressions { get; }
 
