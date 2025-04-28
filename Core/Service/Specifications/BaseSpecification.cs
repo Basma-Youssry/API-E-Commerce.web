@@ -38,5 +38,20 @@ namespace Service.Specifications
         protected void AddOrderByDescending(Expression<Func<TEntity, object>> orderByDescExp) => OrderByDesending = orderByDescExp;
         #endregion
 
+        #region Pagination
+        public int Take { get; private set; }
+
+        public int Skip  { get; private set; }
+
+        public bool IsPaginated { get; set; }
+
+        protected void ApplayPagination(int PageSize, int PageIndex)
+        {
+            IsPaginated = true;
+            Take = PageSize; //10
+            Skip = (PageIndex - 1) * PageSize; 
+        }
+        #endregion
+
     }
 }
