@@ -2,6 +2,7 @@
 
 using DomainLayer.Contracts;
 using E_Commerce.web.CustomMiddleWares;
+using E_Commerce.web.Extentions;
 using E_Commerce.web.Factories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,48 +21,27 @@ namespace E_Commerce.web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            #region Add Services Container
+            
+            #region Add Services to Container
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            builder.Services.AddDbContext<StoreDbContext>(Options =>
-            {
-                Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(typeof(Service.AssemblyReference).Assembly);
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
-            builder.Services.Configure<ApiBehaviorOptions>((Options) =>
-            {
-               
-                Options.InvalidModelStateResponseFactory = ApiResponseFactory.GenerateApiValidationErrorsResponse;
-         
-            });
+            builder.Services.AddSwaggerServices();
+            builder.Services.AddInfrastructureServices(builder.Configuration);
+            builder.Services.AppApplicationServices();
+            builder.Services.AddWepApplicationServices();
             #endregion
 
 
             var app = builder.Build();
 
-            var scoope = app.Services.CreateScope();
-
-            var ObjectOfDataSeeding = scoope.ServiceProvider.GetRequiredService<IDataSeeding>();
-
-            await  ObjectOfDataSeeding.DataSeedAsync();
+            await app.SeedDataBaseAsync();
 
             // Configure the HTTP request pipeline.
 
-            app.UseMiddleware<CustomExceptionHandlerWare>();
+            app.UseCustomExceptionMiddleWare();
 
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddleWares();
             }
 
             app.UseHttpsRedirection();
