@@ -17,35 +17,61 @@ namespace E_Commerce.web.CustomMiddleWares
 
         public async Task InvokeAsync(HttpContext httpContext)
         {
+            await NewMethod(httpContext);
+        }
+
+        private async Task NewMethod(HttpContext httpContext)
+        {
             try
             {
-              await _next.Invoke(httpContext);
+                await _next.Invoke(httpContext);
+
+                await HandleNotFoundEndPointAsync(httpContext);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Somthing went wrrong");
 
-                //Set status code for response
-                //httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                httpContext.Response.StatusCode = ex switch
-                {
-                    NotFoundException => StatusCodes.Status404NotFound,
-                    _ => StatusCodes.Status500InternalServerError
-                };
+                await HandleExceptionAsync(httpContext, ex);
 
-                //Set content type for response
-                //httpContext.Response.ContentType = "application/json";
+            }
+        }
 
-                //Response object
+        private static async Task HandleExceptionAsync(HttpContext httpContext, Exception ex)
+        {
+            //Set status code for response
+            //httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            httpContext.Response.StatusCode = ex switch
+            {
+                NotFoundException => StatusCodes.Status404NotFound,
+                _ => StatusCodes.Status500InternalServerError
+            };
+
+            //Set content type for response
+            //httpContext.Response.ContentType = "application/json";
+
+            //Response object
+            var Response = new ErrorToReturn()
+            {
+                StatusCode = httpContext.Response.StatusCode,
+                ErrorMessage = ex.Message
+            };
+
+            //Return object as Json
+            await httpContext.Response.WriteAsJsonAsync(Response);
+        }
+
+        private static async Task HandleNotFoundEndPointAsync(HttpContext httpContext)
+        {
+            if (httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+            {
                 var Response = new ErrorToReturn()
                 {
-                    StatusCode = httpContext.Response.StatusCode,
-                    ErrorMessage = ex.Message
+                    StatusCode = StatusCodes.Status404NotFound,
+                    ErrorMessage = $"End Point {httpContext.Request.Path} is Not Found"
                 };
 
-                //Return object as Json
                 await httpContext.Response.WriteAsJsonAsync(Response);
-                
             }
         }
     }
