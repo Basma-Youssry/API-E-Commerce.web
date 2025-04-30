@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
 using Shared;
-using Shared.DataTransfareObjects;
+using Shared.DataTransfareObjects.ProductModuleDTos;
 
 namespace Presentation.Controllers
 {

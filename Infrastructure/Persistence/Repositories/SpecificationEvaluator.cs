@@ -7,30 +7,30 @@ using DomainLayer.Contracts;
 using DomainLayer.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence
+namespace Persistence.Repositories
 {
     static class SpecificationEvaluator
     {
         //Create Query
         //_dbContext.Products.Where(P =>P.id == id).Include(P=>P.ProductBrand).Include(P => P.ProductType);
 
-        public static IQueryable<TEntity> CreateQuery<TEntity, TKey> (IQueryable<TEntity> InputQuery, ISpecifications<TEntity, TKey> specifications) where TEntity : BaseEntity<TKey>
+        public static IQueryable<TEntity> CreateQuery<TEntity, TKey>(IQueryable<TEntity> InputQuery, ISpecifications<TEntity, TKey> specifications) where TEntity : BaseEntity<TKey>
         {
             var Query = InputQuery;
 
-            if(specifications.Criteria is not null)
+            if (specifications.Criteria is not null)
             {
                 Query = Query.Where(specifications.Criteria);
             }
-            if(specifications.OrderBy is not null)
+            if (specifications.OrderBy is not null)
             {
                 Query = Query.OrderBy(specifications.OrderBy);
             }
-            if(specifications.OrderByDesending is not null)
+            if (specifications.OrderByDesending is not null)
             {
                 Query = Query.OrderByDescending(specifications.OrderByDesending);
             }
-            if(specifications.IncludeExpressions is not null && specifications.IncludeExpressions.Count > 0)
+            if (specifications.IncludeExpressions is not null && specifications.IncludeExpressions.Count > 0)
             {
                 Query = specifications.IncludeExpressions.Aggregate(Query, (CurrentQuery, IncludeExp) => CurrentQuery.Include(IncludeExp));
             }

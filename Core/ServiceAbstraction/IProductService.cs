@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shared;
-using Shared.DataTransfareObjects;
+using Shared.DataTransfareObjects.ProductModuleDTos;
 
 namespace ServiceAbstraction
 {
