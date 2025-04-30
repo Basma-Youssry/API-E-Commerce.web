@@ -12,6 +12,7 @@ namespace E_Commerce.web.Extentions
             var ObjectOfDataSeeding = scoope.ServiceProvider.GetRequiredService<IDataSeeding>();
 
             await ObjectOfDataSeeding.DataSeedAsync();
+            await ObjectOfDataSeeding.IdentityDataSeedAsync();
         }
 
         public static IApplicationBuilder UseCustomExceptionMiddleWare(this IApplicationBuilder app)
