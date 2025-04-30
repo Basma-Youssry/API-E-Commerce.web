@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 using AutoMapper;
 using DomainLayer.Models.ProductModule;
 using Microsoft.Extensions.Options;
-using Shared.DataTransfareObjects;
+using Shared.DataTransfareObjects.ProductModuleDTos;
 
 namespace Service.Mapping
 {

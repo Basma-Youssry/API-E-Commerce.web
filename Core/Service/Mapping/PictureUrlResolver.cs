@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using DomainLayer.Models.ProductModule;
 using Microsoft.Extensions.Configuration;
-using Shared.DataTransfareObjects;
+using Shared.DataTransfareObjects.ProductModuleDTos;
 
 namespace Service.Mapping
 {
