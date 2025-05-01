@@ -89,7 +89,7 @@ namespace Service
                 issuer: _configuration["JWTOptions:Issure"],
                 audience: _configuration["JWTOptions:Audience"],
                 claims: Claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddHours(24),
                 signingCredentials: Creds );
             return new JwtSecurityTokenHandler().WriteToken(Token);
         }
