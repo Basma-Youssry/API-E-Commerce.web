@@ -37,7 +37,6 @@ namespace Persistence
                    .AddEntityFrameworkStores<StoreIdentityDbContext>();
             return Service;
 
-
         }
     }
 }

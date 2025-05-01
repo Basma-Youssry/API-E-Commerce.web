@@ -11,9 +11,8 @@ using Shared.DataTransfareObjects.ProductModuleDTos;
 
 namespace Presentation.Controllers
 {
-    [ApiController]
-    [Route("api/[Controller]")] //BaseUrl/api/Products
-    public class ProductsController(IServiceManager _serviceManager) : ControllerBase
+   //BaseUrl/api/Products
+    public class ProductsController(IServiceManager _serviceManager) : APIBaseController
     {
         
         //GetAllProducts
