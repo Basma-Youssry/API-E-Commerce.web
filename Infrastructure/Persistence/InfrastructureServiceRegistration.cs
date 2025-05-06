@@ -25,6 +25,8 @@ namespace Persistence
             Service.AddSingleton<IConnectionMultiplexer>((_) =>
             {
                 return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
+
+                //return ConnectionMultiplexer.Connect(configuration.GetConnectionString("RedisConnectionString"));
             });
 
             Service.AddDbContext<StoreIdentityDbContext>(Options =>

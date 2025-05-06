@@ -18,8 +18,10 @@ namespace Presentation.Controllers
 
         //GetAllProducts
         //Get BaseUrl/api/Products
-        //[Authorize]
-        [Authorize(Roles = "Admin")]
+
+
+        //[Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductDTo>>> GetAllProducts([FromQuery]ProductQueryParams queryParams)
         {

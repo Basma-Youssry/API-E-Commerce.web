@@ -11,6 +11,6 @@ namespace Shared.DataTransfareObjects.IdentityDTO_s
     {
         [EmailAddress]
         public string Email { get; set; } = default!;
-        public string Passsword { get; set; } = default!;
+        public string Password { get; set; } = default!;
     }
 }

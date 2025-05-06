@@ -50,7 +50,7 @@ namespace E_Commerce.web
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            //app.UseAuthorization();
+
 
 
             app.MapControllers();

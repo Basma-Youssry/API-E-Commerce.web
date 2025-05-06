@@ -43,12 +43,12 @@ namespace E_Commerce.web.CustomMiddleWares
             //Response object
             var Response = new ErrorToReturn()
             {
-                StatusCode = httpContext.Response.StatusCode,
+                //StatusCode = httpContext.Response.StatusCode,
                 ErrorMessage = ex.Message
             };
             //Set status code for response
             //httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            httpContext.Response.StatusCode = ex switch
+            Response.StatusCode = ex switch
             {
                 NotFoundException => StatusCodes.Status404NotFound,
                 UnauthorizedException => StatusCodes.Status401Unauthorized,
@@ -61,6 +61,7 @@ namespace E_Commerce.web.CustomMiddleWares
 
 
             //Return object as Json
+            httpContext.Response.StatusCode = Response.StatusCode;
             await httpContext.Response.WriteAsJsonAsync(Response);
         }
 

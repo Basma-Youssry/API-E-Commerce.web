@@ -45,7 +45,7 @@ namespace Service
         {
             var User = _userManager.Users.Include(U => U.Address)
                                          .FirstOrDefault(U => U.Email == Email) ?? throw new UserNotFoundException(Email);
-            if(User.Address is not null)
+            if (User.Address is not null) //Update Address
             {
                 User.Address.FirstName = addressDTo.FirstName;
                 User.Address.LastName = addressDTo.LastName;
@@ -53,12 +53,12 @@ namespace Service
                 User.Address.Country = addressDTo.Country;
                 User.Address.Street = addressDTo.Street;
             }
-            else
+            else //Add new Address
             {
                 User.Address = _mapper.Map<AddressDTo, Address>(addressDTo);
             }
 
-           await _userManager.UpdateAsync(User);
+            await _userManager.UpdateAsync(User);
             return _mapper.Map<AddressDTo>(User.Address);
         }
 
@@ -69,7 +69,7 @@ namespace Service
             var User = await _userManager.FindByEmailAsync(loginDTo.Email) ?? throw new UserNotFoundException(loginDTo.Email);
 
             //Check Password
-            var IsPasswordValid = await _userManager.CheckPasswordAsync(User, loginDTo.Passsword);
+            var IsPasswordValid = await _userManager.CheckPasswordAsync(User, loginDTo.Password);
             if (IsPasswordValid)
                 //Return UserDTo
                 return new UserDTo()
@@ -101,7 +101,7 @@ namespace Service
             };
 
             //Create USer [Application User]
-            var Result = await _userManager.CreateAsync(User, registerDTo.Passsword);
+            var Result = await _userManager.CreateAsync(User, registerDTo.Password);
             if (Result.Succeeded)
                 return new UserDTo() { DisplayName = User.DisplayName, Email = User.Email, Token = await CreateTokenAsync(User) };
             else
@@ -114,10 +114,11 @@ namespace Service
        
         private  async Task<string> CreateTokenAsync(ApplicationUser user)
         {
+            
             var Claims = new List<Claim>()
            {
                new(ClaimTypes.Email, user.Email!),
-               new(ClaimTypes.Name, user.UserName),
+               new(ClaimTypes.Name, user.UserName!),
                new(ClaimTypes.NameIdentifier, user.Id!)
            };
             var Roles = await _userManager.GetRolesAsync(user);
@@ -130,11 +131,11 @@ namespace Service
 
 
             var Token = new JwtSecurityToken(
-                issuer: _configuration["JWTOptions:Issure"],
+                issuer: _configuration["JWTOptions:Issuer"], 
                 audience: _configuration["JWTOptions:Audience"],
                 claims: Claims,
                 expires: DateTime.Now.AddHours(1),
-                signingCredentials: Creds );
+                signingCredentials: Creds);
             return new JwtSecurityTokenHandler().WriteToken(Token);
         }
     }

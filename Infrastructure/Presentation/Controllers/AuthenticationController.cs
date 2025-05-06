@@ -19,7 +19,7 @@ namespace Presentation.Controllers
 
         public async Task<ActionResult<UserDTo>> Login(LoginDTo loginDTo)
         {
-            var User = _serviceManager.AuthenticationService.LoginAsync(loginDTo);
+            var User = await _serviceManager.AuthenticationService.LoginAsync(loginDTo);
             return Ok(User);
         }
 
@@ -31,15 +31,15 @@ namespace Presentation.Controllers
             return Ok(User);
         }
 
-        //Get checkEmail
+        ////Get checkEmail
         [HttpGet("CheckEmail")] //GET BaseUrl/api/Authentication/CheckEmail
-        public async Task<ActionResult<bool>> CheclEmail(string Email)
+        public async Task<ActionResult<bool>> CheckEmail(string Email)
         {
             var Result = await _serviceManager.AuthenticationService.CheckEmailAsync(Email);
             return Ok(Result);
         }
 
-        //Get current user 
+        ////Get current user 
         [Authorize]
         [HttpGet("CurrentUser")] //GET BaseUrl/api/Authentication/CurrentUser
         public async Task<ActionResult<UserDTo>> GetCurrentUser()
@@ -49,7 +49,7 @@ namespace Presentation.Controllers
             return Ok(AppUser);
         }
 
-        //Get current user Address
+        ////Get current user Address
         [Authorize]
         [HttpGet("Address")] //GET BaseUrl/api/Authentication/Address
         public async Task<ActionResult<AddressDTo>> GettCurrentUSerAddress()
@@ -59,7 +59,7 @@ namespace Presentation.Controllers
             return Ok(Address);
         }
 
-        //Update current user address
+        ////Update current user address
         [Authorize]
         [HttpPut("Address")] //PUT BaseUrl/api/Authentication/Address
         public async Task<ActionResult<AddressDTo>> UpdateCurrentUserAddress(AddressDTo addressDTo)
