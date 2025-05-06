@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
@@ -11,13 +12,16 @@ using Shared.DataTransfareObjects.ProductModuleDTos;
 
 namespace Presentation.Controllers
 {
-    [ApiController]
-    [Route("api/[Controller]")] //BaseUrl/api/Products
-    public class ProductsController(IServiceManager _serviceManager) : ControllerBase
+   //BaseUrl/api/Products
+    public class ProductsController(IServiceManager _serviceManager) : APIBaseController
     {
-        
+
         //GetAllProducts
         //Get BaseUrl/api/Products
+
+
+        //[Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<PaginatedResult<ProductDTo>>> GetAllProducts([FromQuery]ProductQueryParams queryParams)
         {
