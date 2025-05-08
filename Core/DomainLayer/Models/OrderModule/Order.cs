@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DomainLayer.Models.OrderModule
 {
-    public class Order
+    public class Order :BaseEntity<Guid>
     {
         public string UserEmail { get; set; } = default!;
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
