@@ -134,7 +134,7 @@ namespace Service
                 issuer: _configuration["JWTOptions:Issuer"], 
                 audience: _configuration["JWTOptions:Audience"],
                 claims: Claims,
-                expires: DateTime.Now.AddHours(1),
+                expires: DateTime.Now.AddHours(60),
                 signingCredentials: Creds);
             return new JwtSecurityTokenHandler().WriteToken(Token);
         }
