@@ -14,7 +14,16 @@ namespace ServiceAbstraction
         //And Return Order Details
         //(Id, User Email, OrderDate, Items(Product Name - Picture Url - Price - Quantity)
         //,Address, Delivery Method Name, Order Status Value, Sub Total, Total Price)
-        Task<OrderToReturnDTo> CreateOrder(OrderDTo orderDTo, string Email);
+        Task<OrderToReturnDTo> CreateOrderAsync(OrderDTo orderDTo, string Email);
+
+        //Get Delivery Methods
+        Task<IEnumerable<DeliveryMethodDTo>> GetDeliveryMethodsAsync();
+
+        //Get All Orders
+        Task<IEnumerable<OrderToReturnDTo>> GetAllOrdersAsync(string Email);
+
+        //Get Order By Id
+        Task<OrderToReturnDTo> GetOrderByIdAsync(Guid id);
     }
 
 }

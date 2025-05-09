@@ -23,5 +23,10 @@ namespace Presentation.Controllers
 
             return Ok(Order);
         }
+
+        //Get Delivery Methods
+
+        //[HttpGet("DeliveryMethods")] //Get/api/Orders/DeliveryMethods
+        //public async Task<ActionResult<IEnumerable<DeliveryMethodDTo>>>
     }
 }
