@@ -32,7 +32,7 @@ namespace Service
             Services.AddScoped<Func<IBasketService>>(Provider =>
             () => Provider.GetRequiredService<IBasketService>());
 
-
+            Services.AddScoped<ICacheService, CacheService>();
             return Services;
         }
     }
