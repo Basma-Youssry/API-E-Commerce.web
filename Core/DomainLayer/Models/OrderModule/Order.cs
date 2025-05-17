@@ -8,17 +8,15 @@ namespace DomainLayer.Models.OrderModule
 {
     public class Order :BaseEntity<Guid>
     {
-        public Order()
-        {
-            
-        }
-        public Order(string userEmail, OrderAddress address, DeliveryMethod deliveryMethod, ICollection<OrderItem> items, decimal subTotal)
+
+        public Order(string userEmail, OrderAddress address, DeliveryMethod deliveryMethod, ICollection<OrderItem> items, decimal subTotal, string paymentIntentId = "")
         {
             BuyerEmail = userEmail;
             shipToAddres = address;
             DeliveryMethod = deliveryMethod;
             Items = items;
             SubTotal = subTotal;
+            PaymentIntentId = paymentIntentId;
         }
 
         public string BuyerEmail { get; set; } = default!;
@@ -31,6 +29,9 @@ namespace DomainLayer.Models.OrderModule
         public DateTimeOffset OrderDate { get; set; } = DateTimeOffset.Now;
         public int DeliveryMethodId { get; set; } //FK
         public OrderStatus Status { get; set; }
-        public decimal GetTotal() => SubTotal + DeliveryMethod.Price;
+        public decimal GetTotal() => SubTotal + DeliveryMethod.cost;
+        public string PaymentIntentId { get; set; }
+
+        
     }
 }
