@@ -12,13 +12,13 @@ namespace Shared
         {
             PageIndex = pageIndex;
             PageSize = pageSize;
-            TotalCount = totalCount;
+            count = totalCount;
             Data = data;
         }
 
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
-        public int TotalCount { get; set; }
+        public int count { get; set; }
         public IEnumerable<TEntity> Data{get; set;}
     }
 }
