@@ -32,6 +32,7 @@ namespace Presentation.Controllers
         }
 
         ////Get checkEmail
+        //[HttpGet("emailexists")] //For Angular project
         [HttpGet("CheckEmail")] //GET BaseUrl/api/Authentication/CheckEmail
         public async Task<ActionResult<bool>> CheckEmail(string Email)
         {
