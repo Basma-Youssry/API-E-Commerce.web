@@ -13,7 +13,7 @@ namespace Persistence.Data.Configurations
         public void Configure(EntityTypeBuilder<DeliveryMethod> builder)
         {
             builder.ToTable("DeliveryMethods");
-            builder.Property(D => D.Price)
+            builder.Property(D => D.cost)
                    .HasColumnType("decimal(8,2)");
             builder.Property(D => D.ShortName)
                     .HasColumnType("varchar")

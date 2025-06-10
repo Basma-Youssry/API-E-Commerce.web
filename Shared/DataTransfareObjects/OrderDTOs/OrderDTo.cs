@@ -11,7 +11,7 @@ namespace Shared.DataTransfareObjects.OrderDTOs
     {
         public string BasketId { get; set; } = default!;
         public int DeliveryMethodId { get; set; }
-        public AddressDTo Address { get; set; } = default!;
+        public AddressDTo shipToAddress { get; set; } = default!;
 
     }
 }
